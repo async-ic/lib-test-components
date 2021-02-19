@@ -1,0 +1,42 @@
+*physConfig*
+*constriant*
+*.TopCat%
+
+# don't save simulation data, temp simulation states
+*.log
+*.rdb
+**/results/data/**
+**/test_states/**
+!**/test_states/**/*_active/**
+!**/test_states/**/.sevSaveDir
+
+# Copied from https://github.com/cdsgit/cdsgit/blob/master/setup/cadence.gitignore
+#Cadence files
+*.oa.cdslck.*
+*.lock*
+*.tmp.a
+INCA*
+*pak
+.nfs*
+*.cdslck
+*cdslck*
+*.cd%
+*.cd-
+*.oa-
+*.Cat%
+*.abstract.status
+*.abstract.messages
+*.inca*
+.cdsvmod
+expand.cfg%
+*.oacache
+.cadence
+.inca*
+zviadrag*
+ASSURA/
+\#24unit_0x
+.assura*
+.lvs*
+ncvlog.log
+ConnectedPinsLog.txt
+UnconnectedPinsLog.txt
