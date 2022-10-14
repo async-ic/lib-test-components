@@ -40,3 +40,6 @@ ASSURA/
 ncvlog.log
 ConnectedPinsLog.txt
 UnconnectedPinsLog.txt
+*.os
+*.csv
+*.so

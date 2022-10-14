@@ -1,0 +1,127 @@
+
+/*************************************************************************
+ *
+ *
+ * Copyright 2022 Ole Richter - University of Groningen
+ * Copyright 2022 Michele Mastella - University of Groningen
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 2
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ *  Boston, MA  02110-1301, USA.
+ *
+ **************************************************************************
+ */
+
+
+namespace sim::testbench {
+
+function fsource_init(int verbose) : int;
+function fsource_next(int id; int sim_step) : int;
+function fsource_get(int id; int bit_width) : int;
+function fcheck_next(int id; int sim_step) : int;
+function fcheck_in_order(int id; int data) : int;
+function fcheck_out_of_order(int id; int data) : int;
+function fdump_to_file(int id; int sim_step; int data) : int;
+
+template<pint BIT_WIDTH;pint ID>
+defproc channel_source(chan!(int<BIT_WIDTH>) out; chan?(int) sim_step; chan!(int) done)
+{
+  int current_step, t,data;
+  chp {
+   *[ sim_step?current_step; t := 1;
+    *[ t = 1 -> t := fchannel_source_next(ID,current_step);
+      [ t = 1 -> data := fchannel_source_get(ID,BIT_WIDTH); out!data ; log("send ", data, " on source ", ID) 
+      [] else -> done!1
+      ]
+    ]
+   ]
+  }
+}
+
+template<pint BIT_WIDTH;pint ID>
+defproc channel_checker_in_order(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step; chan!(int) done)
+{
+  int current_step, t, check, data;
+  chp {
+   *[ sim_step?current_step; t := 1;
+    *[ t = 1 -> t := fcheck_next(ID,current_step);
+      [ t = 1 -> in?data; check := fcheck_in_order(ID,data); 
+        [check = 1 -> log("[success] got ",data, " on check ", ID)
+        [] else ->  log("[failure] got wrong ",data, " on check ", ID, " see log")
+        ]
+      [] else -> done!1
+      ]
+    ]
+   ]
+  }
+}
+
+template<pint BIT_WIDTH;pint ID>
+defproc channel_checker_out_of_order(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step; chan!(int<1>) done)
+{
+  int current_step, t, check, data;
+  chp {
+   *[ sim_step?current_step; t := 1;
+    *[ t = 1 -> t := fcheck_next(ID,current_step);
+      [ t = 1 -> in?data; check := fcheck_out_of_order(ID,data); 
+        [check = 1 -> log("[success] got ",data, " on check ", ID)
+        [] else ->  log("[failure] got wrong ",data, " on check ", ID, " see log")
+        ]
+      [] else -> done!1
+      ]
+    ]
+   ]
+  }
+}
+
+template<pint BIT_WIDTH;pint ID>
+defproc channel_dump(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step)
+{
+  int current_step, t;
+  chp {
+   *[ [ #sim_step -> sim_step?current_step
+      | #in -> t:=fdump_to_file(ID,current_step,in)
+      ]
+    ]
+  }
+}
+
+template<pint NUMBER_SOURCE,NUMBER_CHECKER,NUMBER_DUMP;pbool HALT_ON_FALIURE>
+defproc control(chan(int) sim_step_source[NUMBER_SOURCE]; chan(int) sim_step_checker[NUMBER_CHECKER]; chan(int) sim_step_dump[NUMBER_DUMP]; chan?(int<1>) done_source[NUMBER_SOURCE]; chan?(int<1>) done_checker[NUMBER_CHECKER])
+{
+  int current_step, wait;
+  int<1> t, success, failure_free;
+  chp {
+    t:=1;
+    failure_free:=1;
+    *[ t = 1 -> current_step := fcontrol_get();
+      [ current_step = 0 -> skip; // reset here
+      [] else ->
+        (,:j:1..NUMBER_SOURCE: sim_step_source[j]!current_step),
+        (,:j:1..NUMBER_CHECKER: sim_step_checker[j]!current_step),
+        (,:j:1..NUMBER_DUMP: sim_step_dump[j]!current_step);
+        (:j:1..NUMBER_SOURCE: done_source[j]?success; failure_free := failure_free & success);
+        (:j:1..NUMBER_CHECKER: done_checker[j]?success; failure_free := failure_free & success);
+      ];
+      wait := fcontrol_wait();
+      [ wait > 0 -> skip // exec cycle
+      [] else -> skip
+      ];
+      [ HALT_ON_FALIURE & ~failure_free -> t := 0; log("stopped testbech because of failure")
+      [] else -> t:=fcontrol_next()
+      ]
+    ]
+  }
+}
+}
