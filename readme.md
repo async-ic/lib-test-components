@@ -42,7 +42,10 @@ because the controller sets the time out in verilog set your simulation time in 
 this unit is called **control**, it reads a file with the name `control.csv`.
 
 the csv format is, one line per simulation step:
-``` first line: <start step>, <end step> all other lines: <simulation step>, <time to wait for> ```
+
+``` 
+first line: <start step>, <end step> all other lines: <simulation step>, <time to wait for> 
+```
 
 step 0 is the test initialisation - so the reset sequence - and is always
 executed, it can not be used in the test bench.
@@ -100,6 +103,10 @@ the maximum vector width is assumed with 64 bits, as limited by actsim plugin sy
 ## CSV file stucture and location
 
 currenty the files are read and searched in the excecution folder of actsim.
+
+## Installation
+- make sure you have your ACT flow installed (otherwise go here https://github.com/bics-rug/yale-asyncvlsi-actflow/releases/tag/rowling)
+- 
 
 ## running actsim 
 

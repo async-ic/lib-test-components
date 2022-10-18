@@ -24,15 +24,20 @@
  */
 
 
-namespace sim::testbench {
+namespace sim{
+  namespace testbench {
 
-function fsource_init(int verbose) : int;
+function finit (int verbose) : int;
 function fsource_next(int id; int sim_step) : int;
 function fsource_get(int id; int bit_width) : int;
 function fcheck_next(int id; int sim_step) : int;
 function fcheck_in_order(int id; int data) : int;
 function fcheck_out_of_order(int id; int data) : int;
 function fdump_to_file(int id; int sim_step; int data) : int;
+function fcontrol_next(int dontcare) : int;
+function fcontrol_get(int dontcare) : int;
+function fcontrol_wait(int dontcare) : int;
+
 
 template<pint BIT_WIDTH;pint ID>
 defproc channel_source(chan!(int<BIT_WIDTH>) out; chan?(int) sim_step; chan!(int) done)
@@ -40,8 +45,8 @@ defproc channel_source(chan!(int<BIT_WIDTH>) out; chan?(int) sim_step; chan!(int
   int current_step, t,data;
   chp {
    *[ sim_step?current_step; t := 1;
-    *[ t = 1 -> t := fchannel_source_next(ID,current_step);
-      [ t = 1 -> data := fchannel_source_get(ID,BIT_WIDTH); out!data ; log("send ", data, " on source ", ID) 
+    *[ t = 1 -> t := fsource_next(ID,current_step);
+      [ t = 1 -> data := fsource_get(ID,BIT_WIDTH); out!data ; log("send ", data, " on source ", ID) 
       [] else -> done!1
       ]
     ]
@@ -88,10 +93,11 @@ defproc channel_checker_out_of_order(chan?(int<BIT_WIDTH>) in; chan?(int) sim_st
 template<pint BIT_WIDTH;pint ID>
 defproc channel_dump(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step)
 {
-  int current_step, t;
+  int current_step, t,in_tmp;
   chp {
+
    *[ [ #sim_step -> sim_step?current_step
-      | #in -> t:=fdump_to_file(ID,current_step,in)
+      [] #in -> in?in_tmp; t:=fdump_to_file(ID,current_step,in_tmp) //here should be non-deterministic but it doesn't work
       ]
     ]
   }
@@ -106,13 +112,13 @@ defproc control(chan(int) sim_step_source[NUMBER_SOURCE]; chan(int) sim_step_che
     t:=1;
     failure_free:=1;
     *[ t = 1 -> current_step := fcontrol_get();
-      [ current_step = 0 -> skip; // reset here
+      [ current_step = 0 -> skip // reset here
       [] else ->
-        (,:j:1..NUMBER_SOURCE: sim_step_source[j]!current_step),
-        (,:j:1..NUMBER_CHECKER: sim_step_checker[j]!current_step),
-        (,:j:1..NUMBER_DUMP: sim_step_dump[j]!current_step);
-        (:j:1..NUMBER_SOURCE: done_source[j]?success; failure_free := failure_free & success);
-        (:j:1..NUMBER_CHECKER: done_checker[j]?success; failure_free := failure_free & success);
+        (,j:1..NUMBER_SOURCE: sim_step_source[j]!current_step),
+        (,j:1..NUMBER_CHECKER: sim_step_checker[j]!current_step),
+        (,j:1..NUMBER_DUMP: sim_step_dump[j]!current_step);
+        (;j:1..NUMBER_SOURCE: done_source[j]?success; failure_free := failure_free & success);
+        (;j:1..NUMBER_CHECKER: done_checker[j]?success; failure_free := failure_free & success)
       ];
       wait := fcontrol_wait();
       [ wait > 0 -> skip // exec cycle
@@ -123,5 +129,6 @@ defproc control(chan(int) sim_step_source[NUMBER_SOURCE]; chan(int) sim_step_che
       ]
     ]
   }
+}
 }
 }

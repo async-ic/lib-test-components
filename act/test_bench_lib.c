@@ -234,7 +234,7 @@ struct expr_res check_in_order (int num, struct expr_res *args)
         t.v = 1;
       }
       else {
-        check_errors++
+        check_errors++;
         fprintf(logfile,"[FAILURE] expected %d got %d on check %d - %d; Error count %d\n",check_data_buffer[args[0].v],args[1].v,args[0].v,i,check_errors); fflush(logfile);
         t.v = 0;
       }
@@ -280,7 +280,7 @@ struct expr_res check_out_of_order (int num, struct expr_res *args)
   if (t.v == 0){
     check_errors++;
     fprintf(logfile,"[FAILURE] could not find %d on check %d; Error count: %d\n",check_data_buffer[args[0].v],args[1].v,args[0].v,check_errors); fflush(logfile);
-  }s
+  }
   t.width = 1;
   return t; 
 }
