@@ -39,8 +39,8 @@ function fcontrol_get(int dontcare) : int;
 function fcontrol_wait(int dontcare) : int;
 
 
-template<pint BIT_WIDTH;pint ID>
-defproc channel_source(chan!(int<BIT_WIDTH>) out; chan?(int) sim_step; chan!(int) done)
+export template<pint BIT_WIDTH;pint ID>
+defproc channel_source(chan!(int<BIT_WIDTH>) out; chan?(int) sim_step; chan!(int<1>) done)
 {
   int current_step, t,data;
   chp {
@@ -54,8 +54,8 @@ defproc channel_source(chan!(int<BIT_WIDTH>) out; chan?(int) sim_step; chan!(int
   }
 }
 
-template<pint BIT_WIDTH;pint ID>
-defproc channel_checker_in_order(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step; chan!(int) done)
+export template<pint BIT_WIDTH;pint ID>
+defproc channel_checker_in_order(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step; chan!(int<1>) done)
 {
   int current_step, t, check, data;
   chp {
@@ -72,7 +72,7 @@ defproc channel_checker_in_order(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step; 
   }
 }
 
-template<pint BIT_WIDTH;pint ID>
+export template<pint BIT_WIDTH;pint ID>
 defproc channel_checker_out_of_order(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step; chan!(int<1>) done)
 {
   int current_step, t, check, data;
@@ -90,7 +90,7 @@ defproc channel_checker_out_of_order(chan?(int<BIT_WIDTH>) in; chan?(int) sim_st
   }
 }
 
-template<pint BIT_WIDTH;pint ID>
+export template<pint BIT_WIDTH;pint ID>
 defproc channel_dump(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step)
 {
   int current_step, t,in_tmp;
@@ -103,31 +103,63 @@ defproc channel_dump(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step)
   }
 }
 
-template<pint NUMBER_SOURCE,NUMBER_CHECKER,NUMBER_DUMP;pbool HALT_ON_FALIURE>
-defproc control(chan(int) sim_step_source[NUMBER_SOURCE]; chan(int) sim_step_checker[NUMBER_CHECKER]; chan(int) sim_step_dump[NUMBER_DUMP]; chan?(int<1>) done_source[NUMBER_SOURCE]; chan?(int<1>) done_checker[NUMBER_CHECKER])
+defproc channel_dump_dummy(chan?(int) sim_step)
+{
+  chp {
+    *[ sim_step? ]
+  }
+}
+
+defproc channel_source_dummy(chan?(int) sim_step; chan!(int<1>) done)
+{
+  chp {
+    *[ sim_step?;done!1 ]
+  }
+}
+
+defproc channel_checker_dummy(chan?(int) sim_step; chan!(int<1>) done)
+{
+  chp {
+    *[ sim_step?;done!1 ]
+  }
+}
+
+export template<pint NUMBER_SOURCE,NUMBER_CHECKER,NUMBER_DUMP;pbool HALT_ON_FALIURE>
+defproc control(chan(int) sim_step_source[NUMBER_SOURCE+1]; chan(int) sim_step_checker[NUMBER_CHECKER+1]; chan(int) sim_step_dump[NUMBER_DUMP+1]; chan?(int<1>) done_source[NUMBER_SOURCE+1]; chan?(int<1>) done_checker[NUMBER_CHECKER+1])
 {
   int current_step, wait;
   int<1> t, success, failure_free;
+
+  //This is a workaround to permit to have 0 instances of a type.
+  channel_checker_dummy dummy1(.sim_step=sim_step_checker[NUMBER_CHECKER],.done=done_checker[NUMBER_CHECKER]);
+  channel_source_dummy dummy2(.sim_step=sim_step_source[NUMBER_SOURCE],.done=done_source[NUMBER_SOURCE]);
+    channel_dump_dummy dummy3(.sim_step=sim_step_dump[NUMBER_DUMP]);
+    
   chp {
-    t:=1;
+    log("I entered control");
+
+    t:=finit(1);
     failure_free:=1;
-    *[ t = 1 -> current_step := fcontrol_get();
+    *[ t = 1 -> current_step := fcontrol_get(0);
+        log("I entered the t loop at current step:",current_step);
       [ current_step = 0 -> skip // reset here
       [] else ->
-        (,j:1..NUMBER_SOURCE: sim_step_source[j]!current_step),
-        (,j:1..NUMBER_CHECKER: sim_step_checker[j]!current_step),
-        (,j:1..NUMBER_DUMP: sim_step_dump[j]!current_step);
-        (;j:1..NUMBER_SOURCE: done_source[j]?success; failure_free := failure_free & success);
-        (;j:1..NUMBER_CHECKER: done_checker[j]?success; failure_free := failure_free & success)
+        (,j:0..NUMBER_SOURCE: sim_step_source[j]!current_step),
+        (,j:0..NUMBER_CHECKER: sim_step_checker[j]!current_step),
+        (,j:0..NUMBER_DUMP: sim_step_dump[j]!current_step); 
+        (;j:0..NUMBER_SOURCE: done_source[j]?success; failure_free := failure_free & success);
+        (;j:0..NUMBER_CHECKER: done_checker[j]?success; failure_free := failure_free & success)
       ];
-      wait := fcontrol_wait();
+      wait := fcontrol_wait(0);
       [ wait > 0 -> skip // exec cycle
       [] else -> skip
       ];
-      [ HALT_ON_FALIURE & ~failure_free -> t := 0; log("stopped testbech because of failure")
-      [] else -> t:=fcontrol_next()
+      [ HALT_ON_FALIURE & 0=failure_free -> t := 0; log("stopped testbech because of failure")
+      [] else -> t:=fcontrol_next(0);
+        log("I finished the t loop at current step:",current_step)
       ]
-    ]
+    ];
+    log("I finished the program")
   }
 }
 }

@@ -88,7 +88,7 @@ static unsigned int check_errors = 0;
 * verbose: 0 for normal pinting, 1 for verbose printing
 * it returns true on success
 */
-struct expr_res init (int num, struct expr_res *args)
+struct expr_res init_tb (int num, struct expr_res *args)
 {
   struct expr_res t;
   t.v = 0;

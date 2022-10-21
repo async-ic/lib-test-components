@@ -25,10 +25,12 @@
 
 import "../../act/test_bench_lib.act";
 import globals;
+open sim::testbench;
 
 defproc test(){
 	chan(int<5>) channel;
-	//sim::testbench::control<1,1,0,1> control;
-	//sim::testbench::channel_source<5,0> source(.out=channel,.sim_step=control.sim_step_source[0],.done=control.done_source[0]);
-	//sim::testbench::channel_checker_in_order<5,0> sink(.in=channel,.sim_step=control.sim_step_checker,.done=control.done_checker[0]);
+	control<1,1,0,true> control;
+	channel_source<5,0> source(.out=channel,.sim_step=control.sim_step_source[0],.done=control.done_source[0]);
+	channel_checker_in_order<5,0> sink(.in=channel,.sim_step=control.sim_step_checker[0],.done=control.done_checker[0]);
+
 }
