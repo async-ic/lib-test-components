@@ -23,7 +23,7 @@
  **************************************************************************
  */
 
-import "../../act/test_bench_lib.act";
+import "../../../act/test_bench_lib.act";
 import globals;
 open sim::testbench;
 
