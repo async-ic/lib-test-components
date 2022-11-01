@@ -23,9 +23,9 @@
  **************************************************************************
  */
 
-import "../../../act/test_bench_lib.act";
+import sim::test_bench_lib;
 import globals;
-open sim::testbench;
+open sim::test_bench_lib;
 
 defproc test(){
 	chan(int<5>) channel;

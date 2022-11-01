@@ -25,7 +25,7 @@
 
 
 namespace sim{
-  namespace testbench {
+  namespace test_bench_lib {
 
 function finit (int verbose) : int;
 function fsource_next(int id; int sim_step) : int;

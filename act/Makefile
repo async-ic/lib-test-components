@@ -1,6 +1,7 @@
-#-------------------------------------------------------------------------
+#************************************************************************
 #
 #  Copyright (c) 2018 Rajit Manohar
+#  Copyright 2022 Ole Richter - University of Groningen
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -17,13 +18,15 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #  Boston, MA  02110-1301, USA.
 #
-#-------------------------------------------------------------------------
+#*************************************************************************
+
 
 TARGETLIBS=actsim_test_bench_lib.so
 TARGETCONF=actsim_test_bench_lib.conf
+TARGETACT=test_bench_lib.act
+TARGETACTSUBDIR=sim
 
 SHOBJS=test_bench_lib.os
-
 
 SRCS= $(SHOBJS:.os=.c)
 
