@@ -96,9 +96,10 @@ defproc channel_dump(chan?(int<BIT_WIDTH>) in; chan?(int) sim_step)
   int current_step, t,in_tmp;
   chp {
 
-   *[ [ #sim_step -> sim_step?current_step
-      [] #in -> in?in_tmp; t:=fdump_to_file(ID,current_step,in_tmp) //here should be non-deterministic but it doesn't work
-      ]
+   *[ [| #sim_step -> sim_step?current_step
+      [] #in -> in?in_tmp; log("Dumping a spike"); t:=fdump_to_file(ID,current_step,in_tmp);log("Dumped a spike") //here should be non-deterministic but it doesn't work
+      |];
+      log("Waiting for next. sim_step: " ,#sim_step,", in: ",#in)
     ]
   }
 }

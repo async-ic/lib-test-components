@@ -1,0 +1,36 @@
+
+/*************************************************************************
+ *
+ *
+ * Copyright 2022 Ole Richter - University of Groningen
+ * Copyright 2022 Michele Mastella - University of Groningen
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 2
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ *  Boston, MA  02110-1301, USA.
+ *
+ **************************************************************************
+ */
+
+import "../../../act/test_bench_lib.act";
+import globals;
+open sim::testbench;
+
+defproc test(){
+	chan(int<5>) channel;
+	control<1,1,0,true> control;
+	channel_source<5,0> source(.out=channel,.sim_step=control.sim_step_source[0],.done=control.done_source[0]);
+	channel_checker_in_order<5,0> sink(.in=channel,.sim_step=control.sim_step_checker[0],.done=control.done_checker[0]);
+
+}

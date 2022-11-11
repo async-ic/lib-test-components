@@ -230,12 +230,12 @@ struct expr_res check_in_order (int num, struct expr_res *args)
   for (int i = 0; i < check_data_number[args[0].v]; i++){
     if (check_data_used[args[0].v][i] == 0) {
       if (check_data_buffer[args[0].v][i] == args[1].v){
-        fprintf(logfile,"[SUCCESS] got %d = %d on check %d - %d\n",check_data_buffer[args[0].v],args[1].v,args[0].v,i); fflush(logfile);
+        fprintf(logfile,"[SUCCESS] got %d = %d on check %d - %d\n",check_data_buffer[args[0].v][i],args[1].v,args[0].v,i); fflush(logfile);
         t.v = 1;
       }
       else {
         check_errors++;
-        fprintf(logfile,"[FAILURE] expected %d got %d on check %d - %d; Error count %d\n",check_data_buffer[args[0].v],args[1].v,args[0].v,i,check_errors); fflush(logfile);
+        fprintf(logfile,"[FAILURE] expected %d got %d on check %d - %d; Error count %d\n",check_data_buffer[args[0].v][i],args[1].v,args[0].v,i,check_errors); fflush(logfile);
         t.v = 0;
       }
       check_data_used[args[0].v][i] = 1;
