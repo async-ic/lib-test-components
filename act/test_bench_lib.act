@@ -39,14 +39,17 @@ function fcontrol_get(int dontcare) : int;
 function fcontrol_wait(int dontcare) : int;
 
 
-export template<pint BIT_WIDTH;pint ID>
+export template<pint BIT_WIDTH;pint ID; pint VERBOSE>
 defproc channel_source(chan!(int<BIT_WIDTH>) out; chan?(int) sim_step; chan!(int<1>) done)
 {
   int current_step, t,data;
   chp {
    *[ sim_step?current_step; t := 1;
     *[ t = 1 -> t := fsource_next(ID,current_step);
-      [ t = 1 -> data := fsource_get(ID,BIT_WIDTH); out!data ; log("send ", data, " on source ", ID) 
+      [ t = 1 -> data := fsource_get(ID,BIT_WIDTH); out!data ; 
+      [   VERBOSE >= 1 -> log("send ", data, " on source ", ID) 
+      []  else -> skip
+      ]      
       [] else -> done!1
       ]
     ]
