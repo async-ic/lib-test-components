@@ -1,6 +1,23 @@
 
 module source_clock( clk, reset_B, ctl_in, ctl_out, source_done_out, source_done_in);
 
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
+
 parameter FILE_PATH="clk.csv";
 parameter SOURCE_NAME = "clock source";
 parameter real clk_pulse = 4;
@@ -89,6 +106,23 @@ endmodule
 
 
 module check_bd_template(req, data, ack, reset_B, print_in, print_out, error, valid, complete_in, complete_out, ctl_in, ctl_out);
+
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
 
 parameter FILE_PATH="data.csv";
 parameter CHECK_NAME = "bd check";
@@ -325,6 +359,23 @@ endmodule
 
 module power ( vss, vdd );
 
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
+
 output reg vdd;
 output reg vss;
 
@@ -341,6 +392,23 @@ endmodule
 
 
 module source_aMx1of2_template(data_f, data_t, ack, reset_B, ctl_in, ctl_out, source_done_in, source_done_out);
+
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
 
 parameter FILE_PATH="data.csv";
 parameter SOURCE_NAME = "awMx1of2 source";
@@ -466,6 +534,23 @@ endmodule
 
 module end_source_daisychain (ctl_in, source_done_out, true);
 
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
+
 localparam CTL_BUS_MINUS_ONE = 31;
 output wire source_done_out;
 input true;
@@ -568,6 +653,23 @@ endmodule
 
 
 module source_awMx1of2_template(data_f, data_t, ack, valid, reset_B, ctl_in, ctl_out, source_done_in, source_done_out);
+
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
 
 parameter FILE_PATH="data.csv";
 parameter SOURCE_NAME = "awMx1of2 source";
@@ -693,6 +795,23 @@ endmodule
 
 
 module check_awMx1of2_template(data_f, data_t, ack, reset_B, print_in, print_out, error, valid, complete_in, complete_out, ctl_in, ctl_out);
+
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
 
 parameter FILE_PATH="data.csv";
 parameter CHECK_NAME = "awMx1of2 check";
@@ -939,6 +1058,23 @@ endmodule
 
 module control (reset_B, ctl, source_done_in, check_done_in, print, true);
 
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
+
 parameter real  TIMEOUT = 100000000;
 parameter integer  TIMEOUT_ACTIVE = 1;
 parameter real SEND_DONE_TIMEOUT = 10000;
@@ -1079,6 +1215,23 @@ endmodule
 
 module end_check_daisychain (print_in, ctl_in, check_done_out, true);
 
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
+
 localparam CTL_BUS_MINUS_ONE = 31;
 output wire check_done_out;
 input true, print_in;
@@ -1215,6 +1368,23 @@ endmodule
 
 module source_bool_M_template( data, reset_B, ctl_in, ctl_out, source_done_out, source_done_in);
 
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
+
 parameter FILE_PATH="data.csv";
 parameter SOURCE_NAME = "bool M source";
 parameter real data_pulse = 4;
@@ -1302,6 +1472,23 @@ endmodule
 
 
 module check_aMx1of2_template(data_f, data_t, ack, reset_B, print_in, print_out, error, complete_in, complete_out, ctl_in, ctl_out);
+
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
 
 parameter FILE_PATH="data.csv";
 parameter CHECK_NAME = "awMx1of2 check";
@@ -1540,6 +1727,23 @@ endtask
 endmodule
 
 module source_a1of1_template(req, ack, valid, reset_B, ctl_in, ctl_out, source_done_in, source_done_out);
+
+// Copyright 2025 Ole Richter - Yale University
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA  02110-1301, USA.
 
 parameter FILE_PATH="data.csv";
 parameter SOURCE_NAME = "awMx1of2 source";
