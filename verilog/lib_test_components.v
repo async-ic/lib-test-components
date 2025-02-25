@@ -66,9 +66,9 @@ end
 
 task open_file();
 begin
-    file = $fopen(FILE_NAME,"r");
+    file = $fopen(FILE_PATH,"r");
     if(file==0) begin
-		$display("%s: file not found: %s",SOURCE_NAME,FILE_NAME);
+		$display("%s: file not found: %s",SOURCE_NAME,FILE_PATH);
 		$finish;
     end
 end
@@ -491,9 +491,9 @@ end
 
 task open_file();
 begin
-    file = $fopen(FILE_NAME,"r");
+    file = $fopen(FILE_PATH,"r");
     if(file==0) begin
-		$display("%s: file not found: %s",SOURCE_NAME,FILE_NAME);
+		$display("%s: file not found: %s",SOURCE_NAME,FILE_PATH);
 		$finish;
     end
 end
@@ -612,9 +612,9 @@ end
 
 task open_file();
 begin
-    file = $fopen(FILE_NAME,"r");
+    file = $fopen(FILE_PATH,"r");
     if(file==0) begin
-		$display("%s: file not found: %s",SOURCE_NAME,FILE_NAME);
+		$display("%s: file not found: %s",SOURCE_NAME,FILE_PATH);
 		$finish;
     end
 end
@@ -752,9 +752,9 @@ end
 
 task open_file();
 begin
-    file = $fopen(FILE_NAME,"r");
+    file = $fopen(FILE_PATH,"r");
     if(file==0) begin
-		$display("%s: file not found: %s",SOURCE_NAME,FILE_NAME);
+		$display("%s: file not found: %s",SOURCE_NAME,FILE_PATH);
 		$finish;
     end
 end
@@ -1164,7 +1164,7 @@ end
 task open_file();
 integer success, simstep;
 begin
-    file = $fopen(FILE_NAME,"r");
+    file = $fopen(FILE_PATH,"r");
     if(file==0) begin
 		$display("CONTROL: file not found: %s", FILE_PATH);
 		$finish;
@@ -1326,9 +1326,9 @@ end
 
 task open_file();
 begin
-    file = $fopen(FILE_NAME,"r");
+    file = $fopen(FILE_PATH,"r");
     if(file==0) begin
-		$display("%s: file not found: %s",SOURCE_NAME,FILE_NAME);
+		$display("%s: file not found: %s",SOURCE_NAME,FILE_PATH);
 		$finish;
     end
 end
@@ -1435,9 +1435,9 @@ end
 
 task open_file();
 begin
-    file = $fopen(FILE_NAME,"r");
+    file = $fopen(FILE_PATH,"r");
     if(file==0) begin
-		$display("%s: file not found: %s",SOURCE_NAME,FILE_NAME);
+		$display("%s: file not found: %s",SOURCE_NAME,FILE_PATH);
 		$finish;
     end
 end
@@ -1821,9 +1821,9 @@ end
 
 task open_file();
 begin
-    file = $fopen(FILE_NAME,"r");
+    file = $fopen(FILE_PATH,"r");
     if(file==0) begin
-		$display("%s: file not found: %s",SOURCE_NAME,FILE_NAME);
+		$display("%s: file not found: %s",SOURCE_NAME,FILE_PATH);
 		$finish;
     end
 end
