@@ -511,7 +511,7 @@ begin
 	new_step = 0;
 	data_send = 0;
 	while ((~done) && (~data_send)) begin
-				success = $fscanf(file, {"%b",CSV_SEPERATOR,"%d",CSV_NEWLINE},new_data,new_step);
+				success = $fscanf(file, {"%d",CSV_SEPERATOR,"%b",CSV_NEWLINE},new_step,new_data);
 				if(success!=2) begin
 						data_t=0;
 						data_f=0;
@@ -631,7 +631,7 @@ begin
 	new_step = 0;
 	data_send = 0;
 	while ((~step_done) && (~data_send)) begin
-				success = $fscanf(file, {"%b",CSV_SEPERATOR,"%d",CSV_NEWLINE},new_data,new_step);
+				success = $fscanf(file, {"%d",CSV_SEPERATOR,"%b",CSV_NEWLINE},new_step,new_data);
 				if(success!=2) begin
 						step_done = 1'b1;
 				end
@@ -772,7 +772,7 @@ begin
 	new_step = 0;
 	data_send = 0;
 	while ((~done) && (~data_send)) begin
-				success = $fscanf(file, {"%b",CSV_SEPERATOR,"%d",CSV_NEWLINE},new_data,new_step);
+				success = $fscanf(file, {"%d",CSV_SEPERATOR,"%b",CSV_NEWLINE},new_step,new_data);
 				if(success!=2) begin
 						data_t=0;
 						data_f=0;
@@ -1346,7 +1346,7 @@ begin
 	new_step = 0;
 	data_send = 0;
 	while ((~done) && (~data_send)) begin
-				success = $fscanf(file, {"%b",CSV_SEPERATOR,"%d",CSV_NEWLINE},new_data,new_step);
+				success = $fscanf(file, {"%d",CSV_SEPERATOR,"%b",CSV_NEWLINE},new_step,new_data);
 				if(success!=2) begin
 						data=0;
 						req=0;
@@ -1454,7 +1454,7 @@ begin
 	new_step = 0;
 	data_send = 0;
 	while ((~step_done) && (~data_send)) begin
-				success = $fscanf(file, {"%b",CSV_SEPERATOR,"%d",CSV_NEWLINE},new_data,new_step);
+				success = $fscanf(file, {"%d",CSV_SEPERATOR,"%b",CSV_NEWLINE},new_step,new_data);
 				if(success!=2) begin
 						step_done = 1'b1;
 				end
@@ -1841,7 +1841,7 @@ begin
 	new_step = 0;
 	data_send = 0;
 	while ((~done) && (~data_send)) begin
-				success = $fscanf(file, {"%b",CSV_SEPERATOR,"%d",CSV_NEWLINE},new_data,new_step);
+				success = $fscanf(file, {"%d",CSV_SEPERATOR,"%b",CSV_NEWLINE},new_step,new_data);
 				if(success!=2) begin
 						req=0;
 						done = 1'b1;
